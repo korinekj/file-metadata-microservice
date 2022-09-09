@@ -4,12 +4,16 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
-app.use("/public", express.static(process.cwd() + "/public"));
+const indexRouter = require("./controllers/index.js");
 
-app.get("/", function (req, res) {
-  res.sendFile(process.cwd() + "/views/index.html");
-});
+app.use(cors());
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+
+app.set("view engine", "ejs");
+app.set("views");
+
+app.use("/", indexRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
